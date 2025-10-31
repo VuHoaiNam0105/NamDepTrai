@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundWave - Chất Lượng Âm Thanh Đỉnh Cao</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Reset và Cài đặt Cơ bản */
+        :root {
+            --primary-color: #007aff; /* Màu xanh dương chủ đạo */
+            --secondary-color: #5ac8fa; /* Màu xanh phụ */
+            --dark-bg: #111;
+            --light-bg: #f5f5f7;
+            --text-dark: #222;
+            --text-light: #f1f1f1;
+            --border-radius: 12px;
+            --shadow-light: 0 10px 20px rgba(0,0,0,0.08);
+            --shadow-dark: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fff;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1280px; /* Tăng chiều rộng tối đa */
+            margin: 0 auto;
+            padding: 3rem 0; /* Tăng padding */
+        }
+
+        h1, h2, h3 {
+            font-family: 'Poppins', sans-serif; /* Font tiêu đề khác */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        h1 { font-size: 3.5rem; line-height: 1.1; font-weight: 900; }
+        h2 { font-size: 2.5rem; text-align: center; margin-bottom: 3.5rem; color: var(--primary-color); position: relative;}
+        h2::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -15px;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            border-radius: 2px;
+        }
+        h3 { font-size: 1.6rem; font-weight: 600; }
+
+        p {
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: var(--border-radius);
+            object-fit: cover; /* Đảm bảo ảnh không bị méo */
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--secondary-color);
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 50px; /* Bo tròn hơn */
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 25px rgba(0, 122, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 35px rgba(0, 122, 255, 0.45);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            z-index: -1;
+            transform: skewX(-20deg);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        /* 1. Header & Navbar */
+        header {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95); /* Nền hơi trong suốt */
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            backdrop-filter: blur(5px); /* Hiệu ứng làm mờ nền */
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 2.2rem; /* Lớn hơn */
+            font-weight: 900;
+            color: var(--text-dark);
+            letter-spacing: -1px; /* Tạo cảm giác hiện đại */
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2.5rem; /* Khoảng cách lớn hơn */
+        }
+
+        nav ul li a {
+            font-weight: 600;
+            color: var(--text-dark);
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* 2. Hero Section */
+        #hero {
+            background: linear-gradient(135deg, var(--light-bg) 0%, #e0e0e0 100%);
+            padding: 6rem 0 4rem; /* Tăng padding trên */
+            overflow: hidden;
+            position: relative;
+        }
+        
+        #hero::before { /* Lớp overlay tạo gradient */
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(255,255,255,0.8), rgba(255,255,255,0) 50%);
+            z-index: 0;
+        }
+
+        #hero .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem; /* Khoảng cách lớn hơn */
+            position: relative; /* Để nội dung nằm trên overlay */
+            z-index: 1;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 600px;
+            animation: fadeInLeft 1s ease-out; /* Hiệu ứng xuất hiện */
+        }
+
+        .hero-content h1 {
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.8rem;
+            color: #111;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem; /* Lớn hơn */
+            margin-bottom: 2.5rem;
+            color: #444;
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            transform: translateY(0);
+            transition: transform 0.5s ease-out;
+            animation: fadeInRight 1s ease-out; /* Hiệu ứng xuất hiện */
+        }
+        
+        .hero-image img {
+            max-width: 600px; /* Lớn hơn */
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25); /* Shadow mạnh hơn */
+            border-radius: 20px; /* Bo tròn nhiều hơn */
+            transition: transform 0.5s ease;
+            will-change: transform; /* Tối ưu hóa hiệu năng */
+        }
+        
+        .hero-image img:hover {
+            transform: scale(1.03) rotate(1deg); /* Hiệu ứng khi hover */
+        }
+
+        /* 3. Features Section */
+        #features {
+            background: #fff;
+            padding: 5rem 0;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive hơn */
+            gap: 2.5rem; /* Khoảng cách lớn hơn */
+            text-align: center;
+        }
+
+        .feature-item {
+            background: #fff;
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Easing mượt hơn */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        .feature-icon {
+            font-size: 4rem; /* Lớn hơn */
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            animation: bounceIn 0.8s ease-out backwards; /* Hiệu ứng xuất hiện */
+        }
+        .feature-item:nth-child(1) .feature-icon { animation-delay: 0.1s; }
+        .feature-item:nth-child(2) .feature-icon { animation-delay: 0.2s; }
+        .feature-item:nth-child(3) .feature-icon { animation-delay: 0.3s; }
+
+
+        /* 4. Products Section */
+        #products {
+            background: var(--light-bg);
+            padding: 5rem 0;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 18px 40px rgba(0,0,0,0.15);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 280px; /* Cao hơn */
+            object-fit: cover;
+            border-radius: 0;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .product-content {
+            padding: 1.8rem; /* Padding lớn hơn */
+        }
+
+        .product-content h3 {
+            color: #333;
+            margin-bottom: 0.8rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem; /* Lớn hơn */
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-card .btn {
+            padding: 0.7rem 1.2rem;
+            font-size: 0.9rem;
+            border-radius: 5px; /* Nút nhỏ hơn, vuông hơn */
+            box-shadow: none; /* Không có shadow ở đây */
+            background: var(--primary-color);
+        }
+        .product-card .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 122, 255, 0.3);
+        }
+
+
+        /* 5. Contact Section */
+        #contact {
+            background: var(--dark-bg);
+            color: var(--text-light);
+            padding: 5rem 0;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            margin-top: 3rem;
+        }
+
+        #contact h2 {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            color: #fff;
+        }
+        #contact h2::after {
+            background-color: var(--primary-color);
+        }
+        
+        #contact .container {
+            display: flex;
+            gap: 4rem; /* Khoảng cách lớn hơn */
+            align-items: flex-start;
+        }
+
+        .contact-info, .contact-form {
+            flex: 1;
+        }
+        
+        .contact-info h3 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info p {
+            color: #ccc;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-info ul {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+        
+        .contact-info ul li {
+            margin-bottom: 0.8rem;
+            color: #ccc;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .contact-info ul li strong {
+            color: #fff;
+        }
+        
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #eee;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background: #2a2a2a;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 180px;
+        }
+        
+        .btn-submit {
+            width: 100%;
+            border-radius: 8px;
+            padding: 1.2rem;
+            font-size: 1.1rem;
+        }
+
+        /* 6. Footer */
+        footer {
+            text-align: center;
+            padding: 2.5rem 0;
+            background: #000;
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            display: none; /* Bắt đầu ẩn */
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .modal-content-box {
+            background: #fff;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            transform: translateY(-50px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-overlay.active .modal-content-box {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .modal-content-box h3.success { color: #28a745; }
+        .modal-content-box h3.error { color: #dc3545; }
+        
+        /* Animations */
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            h1 { font-size: 2.8rem; }
+            h2 { font-size: 2rem; }
+            
+            #hero .container {
+                flex-direction: column;
+                text-align: center;
+                gap: 2rem;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .hero-image img {
+                max-width: 80%;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            #contact .container {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .contact-info, .contact-form {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 0.8rem;
+            }
+
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            h3 { font-size: 1.4rem; }
+            p { font-size: 1rem; }
+            
+            .features-grid, .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+            .product-card img {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Modal Message Box (Overlay) -->
+    <div id="message-modal-overlay" class="modal-overlay">
+        <div id="message-box" class="modal-content-box">
+            <h3 id="modal-title" style="margin-bottom: 10px;"></h3>
+            <p id="modal-content" style="color: #555; margin-bottom: 20px;"></p>
+            <button id="modal-close-btn" class="btn" style="padding: 0.5rem 1rem; margin: 0 auto; display: block; background: var(--primary-color);">Đóng</button>
+        </div>
+    </div>
+    
+<header>
+        <nav>
+            <a href="#hero" class="logo">Sound<span>Wave</span></a>
+            <ul>
+                <li><a href="#hero">Trang Chủ</a></li>
+                <li><a href="#features">Tính Năng</a></li>
+                <li><a href="#products">Sản Phẩm</a></li>
+                <li><a href="#contact">Liên Hệ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        
+
+<section id="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Âm Thanh Sống Động, <br>Mọi Khoảnh Khắc Bừng Sáng.</h1>
+                    <p>Khám phá bộ sưu tập loa cao cấp từ SoundWave. Công nghệ đột phá và thiết kế tinh xảo hòa quyện, mang đến trải nghiệm âm thanh chân thực, làm bừng sáng mọi không gian sống và cảm xúc của bạn.</p>
+                    <a href="#products" class="btn">Khám Phá Ngay</a>
+                </div>
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1545642953-29472e3a1f18?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODc1M3wwfDF8c2VhcmNofDEzfHxsYXJnZSUyMHBvcnRhYmxlJTIwc3BlYWtlcnxlbnwwfHx8fDE3MTUyNDEzNDR8MA&ixlib=rb-4.0.3&q=80&w=1080"
+                         alt="Loa SoundWave Pro cao cấp"
+                         onerror="this.src='https://placehold.co/600x450/007aff/white?text=SoundWave+Pro+-+Awesome+Sound'">
+                </div>
+            </div>
+        </section>
+
+        
+
+<section id="features">
+            <div class="container">
+                <h2>Trải Nghiệm Khác Biệt Cùng SoundWave</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🎶</div>
+                        <h3>Âm Thanh Hi-Res</h3>
+                        <p>Hỗ trợ chuẩn âm thanh độ phân giải cao, tái tạo từng nốt nhạc tinh tế, sống động như thật.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💎</div>
+                        <h3>Thiết Kế Đột Phá</h3>
+                        <p>Sự kết hợp hoàn hảo giữa công năng và nghệ thuật, kiến tạo vẻ đẹp sang trọng cho không gian của bạn.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🌐</div>
+                        <h3>Kết Nối Đa Nền Tảng</h3>
+                        <p>Đa dạng cổng kết nối: Bluetooth 5.2, Wi-Fi, HDMI ARC, Optical... tương thích mọi thiết bị.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔋</div>
+                        <h3>Pin Khủng</h3>
+                        <p>Thời lượng pin lên đến 24 giờ, cho bạn thỏa sức tận hưởng âm nhạc không ngừng nghỉ.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+
+<section id="products">
+            <div class="container">
+                <h2>Tuyển Tập Sản Phẩm Nổi Bật</h2>
+                <div class="products-grid">
+                    
+
+<div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1594393699778-43d917b20465?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODc1M3wwfDF8c2VhcmNofDN8fHdvb2QlMjBzcGVha2VyfGVufDB8fHx8MTcxNTI0MTQ1M3ww&ixlib=rb-4.0.3&q=80&w=1080" 
+                             alt="Loa Studio One"
+                             onerror="this.src='https://placehold.co/600x400/1a1a1a/white?text=SoundWave+Studio+One'">
+                        <div class="product-content">
+                            <h3>SoundWave DIY JBL Mono</h3>
+                            <p>Loa một kênh nhỏ gọn, dễ lắp ráp, cho âm thanh mạnh mẽ và trung thực. Phù hợp cho người yêu âm thanh muốn tự tay tạo nên sản phẩm cá tính, tiết kiệm và độc đáo.</p>
+                            <div class="product-price">1.599.999 VNĐ</div>
+                            <a href="#contact" class="btn">Mua Ngay</a>
+                        </div>
+                    </div>
+                    
+
+<div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1629862214691-2367d3000b20?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODc1M3wwfDF8c2VhcmNofDJ8fGJsdWV0b290aCUyMHNwZWFrZXJ8ZW58MHx8fHwxNzE1MjQxNTYyfDA&ixlib=rb-4.0.3&q=80&w=1080" 
+                             alt="Loa di động Go Portable"
+                             onerror="this.src='https://placehold.co/600x400/eeeeee/333?text=SoundWave+Go+Portable'">
+                        <div class="product-content">
+                            <h3>SoundWave DIY JBL Boombox 2.0</h3>
+                            <p>Phiên bản nâng cấp với âm thanh mạnh mẽ, bass sâu, thiết kế hiện đại và pin dung lượng lớn. Mang lại trải nghiệm nghe nhạc sống động mọi lúc, mọi nơi, phù hợp cho cả không gian trong nhà và ngoài trời.</p>
+                            <div class="product-price">2.800.000 VNĐ</div>
+                            <a href="#contact" class="btn">Mua Ngay</a>
+                        </div>
+                    </div>
+                    
+
+<div class="product-card">
+                        <img src="https://images.unsplash.com/photo-1621259182978-fbf8ed5e305e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w1ODc1M3wwfDF8c2VhcmNofDQwfHxzb3VuZGJhcnxlbnwwfHx8fDE3MTUyNDE0MTZ8MA&ixlib=rb-4.0.3&q=80&w=1080" 
+                             alt="Loa thanh Cinema Bar"
+                             onerror="this.src='https://placehold.co/600x400/007aff/white?text=SoundWave+Cinema+Bar'">
+                        <div class="product-content">
+                            <h3>SoundWave DIY JBL BoomBox 3</h3>
+                            <p>Loa Bluetooth công suất lớn, mang lại âm bass mạnh và độ di động cao — bản DIY “SoundWave DIY” sẽ tận dụng khung/kích thước hoặc linh kiện gốc của sản phẩm để tạo ra phiên bản tự làm riêng biệt, cá nhân hóa về thiết kế và chất âm.</p>
+                            <div class="product-price">3.900.000 VNĐ</div>
+                            <a href="#contact" class="btn">Mua Ngay</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+
+<section id="contact">
+            <div class="container">
+                <div class="contact-info">
+                    <h2>Liên Hệ Với Chúng Tôi</h2>
+                    <p>Đừng ngần ngại liên hệ với đội ngũ chuyên gia của SoundWave để được tư vấn về sản phẩm và giải đáp mọi thắc mắc của bạn.</p>
+                    <ul>
+                        <li><img width="24" height="24" src="https://img.icons8.com/material-sharp/24/FFFFFF/marker.png" alt="marker"/> <strong>Địa chỉ:</strong> Thôn Quang Khải, Xã Tứ Kỳ, Thành Phố Hải Phòng</li>
+                        <li><img width="24" height="24" src="https://img.icons8.com/material-sharp/24/FFFFFF/phone.png" alt="phone"/> <strong>Điện thoại:</strong> (09) 8732 7031</li>
+                        <li><img width="24" height="24" src="https://img.icons8.com/material-sharp/24/FFFFFF/filled-message.png" alt="filled-message"/> <strong>Email:</strong> dhtmhmtunam2003@gmail.com</li>
+                        <li><img width="24" height="24" src="https://img.icons8.com/material-sharp/24/FFFFFF/clock.png" alt="clock"/> <strong>Giờ làm việc:</strong> T2 - T6: 9:00 - 18:00</li>
+                    </ul>
+                </div>
+                <div class="contact-form">
+                    
+                    <!-- Form Action được sửa thành ?ajax=true -->
+                    <form action="https://formsubmit.co/dhtmhmtunam2003@gmail.com?ajax=true" method="POST" id="main-contact-form">
+                        
+                        <!-- LƯU Ý: THAY ĐỔI "your@email.com" THÀNH GMAIL CỦA BẠN -->
+                        <input type="hidden" name="_replyto" value="dhtmhmtunam2003@gmail.com">
+                        <!-- Đã xóa _next để hiển thị thông báo ngay trên trang bằng JavaScript -->
+                        
+                        <div class="form-group">
+                            <label for="name">Họ và Tên</label>
+                            <!-- Đã thêm name attribute -->
+                            <input type="text" id="name" name="Họ tên" required placeholder="Nhập họ tên của bạn">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <!-- Đã thêm name attribute -->
+                            <input type="email" id="email" name="Email người gửi" required placeholder="Nhập địa chỉ email của bạn">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Lời Nhắn</label>
+                            <!-- Đã thêm name attribute -->
+                            <textarea id="message" name="Nội dung" required placeholder="Bạn muốn hỏi gì về sản phẩm SoundWave?"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-submit">Gửi Tin Nhắn qua Gmail</button>
+                    </form>
+                    <p id="form-info-msg" style="color: #f1f1f1; font-size: 0.9rem; text-align: center; margin-top: 1rem;">
+                        <span style="color: var(--primary-color);"></span> 
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    
+
+<footer>
+        <p>&copy; 2025 SoundWave Việt Nam. Mọi quyền được bảo lưu. </p>
+    </footer>
+
+    <script>
+        // Hàm hiển thị modal thông báo
+        function showModal(title, message, isSuccess = true) {
+            const modalOverlay = document.getElementById('message-modal-overlay');
+            const modalTitle = document.getElementById('modal-title');
+            const modalContent = document.getElementById('modal-content');
+
+            modalTitle.textContent = title;
+            modalContent.textContent = message;
+            
+            modalTitle.classList.remove('success', 'error');
+            modalTitle.classList.add(isSuccess ? 'success' : 'error');
+
+            // Bật display và thêm class 'active' để kích hoạt transition CSS
+            modalOverlay.style.display = 'flex';
+            setTimeout(() => {
+                modalOverlay.classList.add('active');
+            }, 10);
+        }
+
+        // Hàm ẩn modal
+        function hideModal() {
+            const modalOverlay = document.getElementById('message-modal-overlay');
+            modalOverlay.classList.remove('active');
+            // Đợi transition kết thúc (0.3s) trước khi ẩn hoàn toàn
+            setTimeout(() => {
+                 modalOverlay.style.display = 'none';
+            }, 300);
+        }
+        
+        // Gắn sự kiện cho nút đóng modal
+        document.getElementById('modal-close-btn').addEventListener('click', hideModal);
+        
+        // Logic xử lý Form AJAX
+        const form = document.getElementById('main-contact-form');
+        const submitButton = form.querySelector('.btn-submit');
+
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            // Hiển thị trạng thái đang gửi
+            submitButton.textContent = 'Đang Gửi...';
+            submitButton.disabled = true;
+
+            const formAction = this.getAttribute('action');
+            const formData = new FormData(this);
+
+            try {
+                // Sử dụng fetch API để gửi dữ liệu AJAX
+                const response = await fetch(formAction, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json' // Yêu cầu FormSubmit trả về JSON
+                    },
+                    body: formData
+                });
+
+                if (response.ok) {
+                    // Gửi thành công
+                    showModal(
+                        'Thành Công!', 
+                        'Lời nhắn của bạn đã được gửi thành công. Chúng tôi sẽ liên hệ lại sớm nhất.', 
+                        true
+                    );
+                    form.reset(); // Xóa form
+                } else {
+                    // Xử lý lỗi từ FormSubmit
+                    const errorData = await response.json();
+                    showModal(
+                        'Lỗi Gửi!', 
+                        errorData.message || 'Đã xảy ra lỗi trong quá trình gửi. Vui lòng kiểm tra địa chỉ Email đã cài đặt.', 
+                        false
+                    );
+                }
+            } catch (error) {
+                // Xử lý lỗi mạng
+                showModal(
+                    'Lỗi Mạng!', 
+                    'Không thể kết nối với máy chủ. Vui lòng kiểm tra kết nối mạng và thử lại.', 
+                    false
+                );
+                console.error('Lỗi khi gửi form:', error);
+            } finally {
+                // Đặt lại nút gửi
+                submitButton.textContent = 'Gửi Tin Nhắn qua Gmail';
+                submitButton.disabled = false;
+            }
+        });
+
+
+        // Hiệu ứng parallax nhẹ cho ảnh hero 
+        document.addEventListener('scroll', function() {
+            const heroImage = document.querySelector('#hero .hero-image img');
+            if (heroImage) {
+                const scrollPosition = window.pageYOffset;
+                heroImage.style.transform = `translateY(${scrollPosition * 0.15}px)`; 
+            }
+        });
+    </script>
+
+</body>
+</html>
